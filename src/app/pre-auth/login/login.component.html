@@ -1,1 +1,51 @@
-<p>login works!</p>
+<h2>Login</h2>
+<div class="container">
+  <form [formGroup]="loginForm">
+    <div class="form-group p-4">
+      <label for="username" class="py-2">Username</label>
+      <input
+        type="text"
+        formControlName="username"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+      />
+      <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+        <div *ngIf="f.username.errors.required">Username is required</div>
+      </div>
+    </div>
+    <div *ngIf="showOtpField" class="form-group p-4">
+      <label for="otp" class="py-2">Enter OTP</label>
+      <input type="text" formControlName="otp" class="form-control" />
+      <div *ngIf="submitted && showOtpField" class="invalid-feedback">
+        <div *ngIf="!f.otp.value">OTP is required</div>
+      </div>
+    </div>
+    <div class="form-group p-3">
+      <button
+        *ngIf="!showOtpField"
+        [disabled]="loading"
+        class="btn btn-primary"
+        (click)="onSendOtp()"
+      >
+        <span
+          *ngIf="loading"
+          class="spinner-border spinner-border-sm mr-1"
+        ></span>
+        Send OTP
+      </button>
+      <button
+        *ngIf="showOtpField"
+        [disabled]="loading || !showOtpField || !f.otp.value"
+        class="btn btn-primary"
+        (click)="onLogin()"
+      >
+        <span
+          *ngIf="loading"
+          class="spinner-border spinner-border-sm mr-1"
+        ></span>
+        Login
+      </button>
+      <a routerLink="/register" class="btn btn-link">Register</a>
+    </div>
+  </form>
+</div>
