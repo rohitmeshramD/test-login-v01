@@ -18,7 +18,10 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.currentUser = this.authenticationService.demoCurrentUserValue
+    if (this.authenticationService.demoCurrentUserValue) {
+
+      this.currentUser = this.authenticationService.demoCurrentUserValue
+    } else this.logout()
   }
 
   logout() {
